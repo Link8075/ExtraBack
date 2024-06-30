@@ -1,26 +1,26 @@
 import express from 'express'
-import { Watching } from '../types/Watching.type'
-import WatchingService from '../services/watching.service'
+import { MyList } from '../types/MyList.type'
+import MyListService from '../services/mylist.service'
 import passport from 'passport'
 import { User, JwtRequestType } from '../types/User.type'
 
 const router = express.Router()
-const service = new WatchingService()
+const service = new MyListService()
 
 router.post('/', passport.authenticate('jwt', { session: false}), async(req: JwtRequestType, res) => {
-    const watching: Watching = req.body
+    const mylist: MyList = req.body
     
-    const newWatching = await service.create(watching)
+    const newMyList = await service.create(mylist)
     
-    res.status(201).json(newWatching)
-});
+    res.status(201).json(newMyList)
+})
 
 router.get('/all', async(req: JwtRequestType, res, next) => {
     try {
         const { user } = req
         console.log(user)
-        const watches = await service.findAll()
-        res.status(200).json(watches)
+        const milista = await service.findAll()
+        res.status(200).json(milista)
     } catch (error) {
         next(error)
     }
@@ -28,8 +28,8 @@ router.get('/all', async(req: JwtRequestType, res, next) => {
 
 router.get('/registro/:id', async (req, res, next) => {
     try {
-        const watching = await service.findById(req.params.id)
-        res.status(200).json(watching)
+        const mylista = await service.findById(req.params.id)
+        res.status(200).json(mylista)
     } catch (error) {
         next(error)
     }
@@ -37,8 +37,8 @@ router.get('/registro/:id', async (req, res, next) => {
 
 router.get('/eliminar/:id', async (req, res, next) => {
     try {
-        const watching = await service.deleteById(req.params.id)
-        res.status(200).json(watching)
+        const mylista = await service.deleteById(req.params.id)
+        res.status(200).json(mylista)
     } catch (error) {
         next(error)
     }
@@ -46,9 +46,9 @@ router.get('/eliminar/:id', async (req, res, next) => {
 
 router.post('/editar/:id', async (req, res, next) => {
     try {
-        const watching: Watching = req.body
-        const newWatching = await service.editById(req.params.id, watching)
-        res.status(201).json(newWatching)
+        const mylist: MyList = req.body
+        const newMyList = await service.editById(req.params.id, mylist)
+        res.status(201).json(newMyList)
     } catch (error) {
         next(error)
     }
@@ -57,8 +57,8 @@ router.post('/editar/:id', async (req, res, next) => {
 router.get('/user/:user', async (req: JwtRequestType, res) => {
     try {
         const user = req.params.user
-        const watches = await service.findByUser(user)
-        res.status(200).json(watches)
+        const milista = await service.findByUser(user)
+        res.status(200).json(milista)
     } catch (error) {
         console.error('Error al buscar por user:', error)
         res.status(500).json({ message: 'Error interno del servidor' })

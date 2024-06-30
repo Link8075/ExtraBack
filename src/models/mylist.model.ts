@@ -1,29 +1,25 @@
 import { Schema, model } from "mongoose"
-import { Watching, WatchingModel } from "../types/Watching.type"
+import { MyList, MyListModel } from "../types/MyList.type"
 
-export const WATCHING_REFERENCE = 'Watching'
+export const MYLIST_REFERENCE = 'MyList'
 
-const Watches = new Schema<Watching, WatchingModel>({
-    serie: {
+const MiLista = new Schema<MyList, MyListModel>({
+    titulo: {
         type: String,
         required: true,
         unique: false,
         index: true,
         trim: true
     },
-    temporada: {
+    temporadas: {
         type: String,
         required: true
     },
-    capitulo: {
+    descripcion: {
         type: String,
         required: true
     },
-    duracion: {
-        type: String,
-        required: false,
-    },
-    checkpoint: {
+    plataforma: {
         type: String,
         required: true,
     },
@@ -33,4 +29,4 @@ const Watches = new Schema<Watching, WatchingModel>({
     }
 })
 
-export default model(WATCHING_REFERENCE, Watches)
+export default model(MYLIST_REFERENCE, MiLista)

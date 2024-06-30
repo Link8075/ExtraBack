@@ -1,11 +1,11 @@
 import express from 'express';
-import { User, UserModel } from '../types/User.type'
+import { User } from '../types/User.type'
 import UserService from '../services/user.service'
 import passport from 'passport'
 import boom from '@hapi/boom'
 
-const router = express.Router();
-const service = new UserService();
+const router = express.Router()
+const service = new UserService()
 
 router.post('/', async (req, res, next) => {
     try {
@@ -20,31 +20,19 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-// router.get('/', async (req, res, next) => {
-//     try {
-//       const { name } = req.query
-//       const user = await service.findByName(name as string)
-//       console.log({ user })
-  
-//       res.status(200).json({ user })
-//     } catch (error) {
-//       next(error)
-//     }
-//   })
-
-router.get('/all', passport.authenticate('jwt', { session: false}), async(req, res, next) => {
+router.get('/all', async(req, res, next) => {
     try {
-        const users = await service.findAll();
-        res.status(200).json(users);
+        const users = await service.findAll()
+        res.status(200).json(users)
     } catch (error) {
-        next(error);
+        next(error)
     }
 });
 
 router.post('/', passport.authenticate('local', { session: false}), async (req, res, next) => {
     try {
         const { email } = req.query
-        const user = await service.findByEmail(email as string);
+        const user = await service.findByEmail(email as string)
         
         res.status(200).json({user})
     } catch(error) {

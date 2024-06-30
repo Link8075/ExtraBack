@@ -1,5 +1,5 @@
-import type { Model, ObjectId } from 'mongoose';
-import type { Request } from 'express';
+import type { Model, ObjectId } from 'mongoose'
+import type { Request } from 'express'
 
 export type User = ToClientUser & {
     password: string
@@ -7,9 +7,6 @@ export type User = ToClientUser & {
     lastModified?: Date
 }
 
-// TODO: Hay dos tipos de user request
-// La de la autenticación local (email y contraseña)
-// Falta definir el tipo para la autenticación con jwt
 export type UserRequestType = Request & {
     user: User
 }

@@ -1,14 +1,13 @@
-import type { Model } from "mongoose";
-import { User } from './User.type'
+import type { Model } from "mongoose"
 
 export type Watching = {
     id?: string
     serie: string
-    temporada: number
-    capitulo: number
+    temporada: string
+    capitulo: string
     duracion?: string
     checkpoint: string
-    user: User
+    user: string
 }
 
 export type WatchingModel = Model<Watching>

@@ -1,63 +1,63 @@
-import Watches from '../models/watching.model'
-import { Watching } from '../types/Watching.type';
+import MiLista from '../models/mylist.model'
+import { MyList } from '../types/MyList.type';
 import boom from '@hapi/boom';
 
-class WatchingService {
-    async create(watching: Watching) {
-        const newWatching = await Watches.create({...watching}).catch((error) => {
+class MyListService {
+    async create(mylist: MyList) {
+        const newMyList = await MiLista.create({...mylist}).catch((error) => {
             console.log('Could not save watches', error)
         })
-        return newWatching
+        return newMyList
     }
     
     async findAll() {
-        const watches = await Watches.find().catch((error) => {
+        const milista = await MiLista.find().catch((error) => {
             console.log('Error while connecting to the DB', error)
         })
         
-        if (!watches) {
+        if (!milista) {
             throw boom.notFound('There are not watches')
         }
         
-        return watches;
+        return milista
     }
     
     async findById(id: string) {
-        const watching = await Watches.findById(id).catch((error) => {
+        const mylist = await MiLista.findById(id).catch((error) => {
             console.log('Error while connecting to the BD', error)
         })
         
-        if (!watching) {
+        if (!mylist) {
             throw boom.notFound('Watching not found')
         }
         
-        return watching;
+        return mylist
     }
     
     async deleteById(id: string) {
-        const watching = await Watches.findByIdAndDelete(id).catch((error) => {
+        const mylist = await MiLista.findByIdAndDelete(id).catch((error) => {
             console.log('Error while connecting to the BD', error)
         })
-        if (!watching) {
+        if (!mylist) {
             throw boom.notFound('Watching not found')
         }
-        return watching;
+        return mylist;
     }
     
-    async editById(id: string, watching: Watching) {
-        const newWatching = await Watches.findByIdAndUpdate(id, { $set: watching }, { new: true }).catch((error) => {
+    async editById(id: string, mylist: MyList) {
+        const newMyList = await MiLista.findByIdAndUpdate(id, { $set: mylist }, { new: true }).catch((error) => {
             console.log('Error while connecting to the BD', error)
         })
-        if (!newWatching) {
+        if (!newMyList) {
             throw boom.notFound('Watching not found')
         }
-        return newWatching
+        return newMyList
     }
     
     async findByUser(user: string) {
         try {
-            const watches = await Watches.find({ user: user })
-            return watches
+            const milista = await MiLista.find({ user: user })
+            return milista
         } catch (error) {
             console.error('Error al buscar por user:', error)
             throw error;
@@ -65,4 +65,4 @@ class WatchingService {
     }
 }
 
-export default WatchingService;
+export default MyListService
